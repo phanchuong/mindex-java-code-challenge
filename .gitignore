@@ -23,3 +23,6 @@ build/classes/java/main/com/mindex/challenge/service/impl/CompensationServiceImp
 build/classes/java/main/com/mindex/challenge/service/impl/EmployeeServiceImpl.class
 build/classes/java/main/com/mindex/challenge/service/impl/ReportingStructureServiceImpl.class
 build/tmp/compileJava/previous-compilation-data.bin
+.gradle/7.4.2/checksums/checksums.lock
+.gradle/7.4.2/dependencies-accessors/dependencies-accessors.lock
+.gradle/7.4.2/executionHistory/executionHistory.lock

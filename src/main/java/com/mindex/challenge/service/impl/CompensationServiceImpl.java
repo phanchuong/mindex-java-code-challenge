@@ -37,6 +37,7 @@ public class CompensationServiceImpl implements CompensationService {
     @Override
     public Compensation create(Compensation compensation) throws EmployeeNotFoundException {
         LOG.debug("Creating compensation [{}]", compensation);
+        // Check if employeeId valid and such employee exists
         String employeeId = null;
         if (compensation.getEmployee() != null)
             employeeId = compensation.getEmployee().getEmployeeId();
