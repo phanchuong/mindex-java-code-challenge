@@ -5,8 +5,10 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.mindex.challenge.dao.CompensationRepository;
+import com.mindex.challenge.dao.EmployeeRepository;
 import com.mindex.challenge.data.Compensation;
 import com.mindex.challenge.data.Employee;
+import com.mindex.challenge.exception.EmployeeNotFoundException;
 import com.mindex.challenge.service.CompensationService;
 import org.springframework.data.domain.Example;
 
@@ -23,6 +25,9 @@ public class CompensationServiceImpl implements CompensationService {
     @Autowired
     CompensationRepository compensationRepository;
 
+    @Autowired
+    EmployeeRepository employeeRepository;
+
     /**
      * The service method to create a compensation from input
      * 
@@ -30,8 +35,17 @@ public class CompensationServiceImpl implements CompensationService {
      * @return Compensation
      */
     @Override
-    public Compensation create(Compensation compensation) {
+    public Compensation create(Compensation compensation) throws EmployeeNotFoundException {
         LOG.debug("Creating compensation [{}]", compensation);
+        String employeeId = null;
+        if (compensation.getEmployee() != null)
+            employeeId = compensation.getEmployee().getEmployeeId();
+        Employee employee = null;
+        if (employeeId != null)
+            employee = employeeRepository.findByEmployeeId(employeeId);
+        if (employee == null) {
+            throw new EmployeeNotFoundException(employeeId);
+        }
         return compensationRepository.save(compensation);
     }
 

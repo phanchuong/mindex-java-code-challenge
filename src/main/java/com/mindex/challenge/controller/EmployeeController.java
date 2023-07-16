@@ -3,6 +3,7 @@ package com.mindex.challenge.controller;
 import com.mindex.challenge.data.Compensation;
 import com.mindex.challenge.data.Employee;
 import com.mindex.challenge.data.ReportingStructure;
+import com.mindex.challenge.exception.EmployeeNotFoundException;
 import com.mindex.challenge.exception.ReferenceCycleException;
 import com.mindex.challenge.service.CompensationService;
 import com.mindex.challenge.service.EmployeeService;
@@ -78,9 +79,15 @@ public class EmployeeController {
      * @return ResponseEntity<Compensation>
      */
     @PostMapping("/employee/compensation/create")
-    public ResponseEntity<Compensation> createCompensation(@RequestBody Compensation compensation) {
+    public ResponseEntity<Object> createCompensation(@RequestBody Compensation compensation) {
         LOG.debug("Received compensation create request for [{}]", compensation);
-        return ResponseEntity.ok(compensationService.create(compensation));
+        try {
+            return ResponseEntity.ok(compensationService.create(compensation));
+        } catch (EmployeeNotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+        
     }
 
     
